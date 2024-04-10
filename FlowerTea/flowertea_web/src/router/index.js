@@ -1,0 +1,202 @@
+//import VueRouter from "vue-router";
+import Vue from 'vue'
+import Router from 'vue-router'
+Vue.use(Router)
+const router=new Router({
+    mode:'history',
+    routes:[
+        {
+            path: '/Error',
+            component:()=>import('../components/PageError/PageError')
+        },
+        {
+            path:'/',
+            name:'Login',
+            component:()=>import('../components/AloGin')
+        },
+        {
+            path:'/Manager',
+            name:'ManaGe',
+            meta:{
+                requireAuth:true
+            },
+            component:()=>import('../components/ManaGe'),
+            children:[
+                {
+                    path:'Homepage',
+                    name:'Homepage',
+                    meta:{
+                        requireAuth:true
+                    },
+                    component:()=>import('../components/Homepage/HomePage')
+                },
+                {
+                    path:'Tea',
+                    name:'Tea',
+                    meta:{
+                        requireAuth:true
+                    },
+                    component:()=>import('../components/Tea/TeA')
+                },
+                {
+                    path:'Material',
+                    name:'Material',
+                    meta:{
+                        requireAuth:true
+                    },
+                    component:()=>import('../components/Material/MaTerial')
+                },
+                {
+                    path:'Collection',
+                    name:'Collection',
+                    meta:{
+                        requireAuth:true
+                    },
+                    component:()=>import('../components/Collection/MyCollection')
+                },
+                {
+                    path:'User',
+                    name:'User',
+                    meta:{
+                        requireAuth:true
+                    },
+                    component:()=>import('../components/User/UsEr')
+                },
+                {
+                    path:'Record',
+                    name:'Record',
+                    meta:{
+                        requireAuth:true
+                    },
+                    component:()=>import('../components/Record/ReCord')
+                },
+                {
+                    path:'userHome',
+                    name:'userHome',
+                    meta:{
+                        requireAuth:true
+                    },
+                    component:()=>import('../components/Home/UserHome')
+                },
+                {
+                    path:'Feedback',
+                    name:'Feedback',
+                    meta:{
+                        requireAuth:true
+                    },
+                    component:()=>import('../components/FeedBack/FeedBack')
+                }
+            ]
+        }
+    ]
+})
+/*
+const routes=[
+    {
+        path: '/Error',
+        component:()=>import('../components/PageError/PageError')
+    },
+    {
+        path:'/',
+        name:'Login',
+        component:()=>import('../components/AloGin')
+    },
+    {
+        path:'/Manager',
+        name:'ManaGe',
+        meta:{
+            requireAuth:true
+        },
+        component:()=>import('../components/ManaGe'),
+        children:[
+            {
+                path:'Homepage',
+                name:'Homepage',
+                meta:{
+                    requireAuth:true
+                },
+                component:()=>import('../components/Homepage/HomePage')
+            },
+            {
+                path:'Tea',
+                name:'Tea',
+                meta:{
+                    requireAuth:true
+                },
+                component:()=>import('../components/Tea/TeA')
+            },
+            {
+                path:'Material',
+                name:'Material',
+                meta:{
+                    requireAuth:true
+                },
+                component:()=>import('../components/Material/MaTerial')
+            },
+            {
+                path:'Collection',
+                name:'Collection',
+                meta:{
+                    requireAuth:true
+                },
+                component:()=>import('../components/Collection/MyCollection')
+            },
+            {
+                path:'User',
+                name:'User',
+                meta:{
+                    requireAuth:true
+                },
+                component:()=>import('../components/User/UsEr')
+            },
+            {
+                path:'Record',
+                name:'Record',
+                meta:{
+                    requireAuth:true
+                },
+                component:()=>import('../components/Record/ReCord')
+            },
+            {
+                path:'userHome',
+                name:'userHome',
+                meta:{
+                    requireAuth:true
+                },
+                component:()=>import('../components/Home/UserHome')
+            },
+            {
+                path:'Feedback',
+                name:'Feedback',
+                meta:{
+                    requireAuth:true
+                },
+                component:()=>import('../components/FeedBack/FeedBack')
+            }
+        ]
+    }
+]
+
+ */
+/*
+const router =new VueRouter({
+    mode:'history',
+    routes
+})
+
+ */
+
+router.beforeEach((to,from,next)=>{
+    if(to.meta.requireAuth){
+        if(sessionStorage.getItem('CurUser')){
+            next();
+        }else {
+            next({
+                path:'/Error',
+            })
+        }
+    }else{
+        next();
+    }
+})
+export default router;

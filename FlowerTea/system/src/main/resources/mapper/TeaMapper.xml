@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.system.mapper.TeaMapper">
+
+    <insert id="addMaterial"  parameterType="com.system.model.IsMaterial">
+        insert into matches (tea_ID,material_ID,weight)
+        values (#{teaID},#{materialID},#{weight})
+    </insert>
+
+    <update id="updateMaterial" parameterType="com.system.model.IsMaterial">
+        update matches set weight=#{weight}
+        where tea_ID=#{teaID} and material_ID=#{materialID};
+    </update>
+
+    <select id="selectMaterial" resultType="com.system.model.IsMaterial">
+        select * from tea,material,matches where teaID=tea_ID and materialID=material_ID and tea_ID=#{teaID} order by material_ID;
+    </select>
+
+    <select id="haveMaterial" resultType="com.system.model.IsMaterial">
+        select * from tea,material,matches where teaID=tea_ID and materialID=material_ID and tea_ID=#{teaID} and material_ID=#{materialID} ;
+    </select>
+
+    <delete id="delMaterial">
+        delete from matches where tea_ID=#{teaID} and material_ID=#{materialID};
+    </delete>
+
+
+</mapper>
